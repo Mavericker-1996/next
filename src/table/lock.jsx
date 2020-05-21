@@ -76,6 +76,7 @@ export default function lock(BaseComponent) {
 
         componentDidUpdate() {
             this.adjustSize();
+            this._isLock = false;
         }
 
         componentWillUnmount() {
@@ -360,10 +361,24 @@ export default function lock(BaseComponent) {
                         const headerCell =
                             this.getHeaderCellNode(0, index) || {};
 
-                        return {
-                            cellWidths: cell.clientWidth || 0,
-                            headerWidths: headerCell.clientWidth || 0,
-                        };
+                        // fix https://codesandbox.io/s/fusion-next-template-d9bu8
+                        // close #1832
+                        try {
+                            return {
+                                cellWidths:
+                                    parseFloat(getComputedStyle(cell).width) ||
+                                    0,
+                                headerWidths:
+                                    parseFloat(
+                                        getComputedStyle(headerCell).width
+                                    ) || 0,
+                            };
+                        } catch (error) {
+                            return {
+                                cellWidths: cell.clientWidth || 0,
+                                headerWidths: headerCell.clientWidth || 0,
+                            };
+                        }
                     })
                     .reduce(
                         (a, b) => {
@@ -394,7 +409,8 @@ export default function lock(BaseComponent) {
                 }
 
                 const configWidths =
-                    widthObj.cellWidths || widthObj.headerWidths;
+                    parseInt(widthObj.cellWidths) ||
+                    parseInt(widthObj.headerWidths);
 
                 if (configWidths <= width && configWidths > 0) {
                     this.removeLockTable();
