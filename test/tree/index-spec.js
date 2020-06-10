@@ -8,8 +8,6 @@ import Tree from '../../src/tree/index';
 import Button from '../../src/button/index';
 import '../../src/tree/style.js';
 
-
-
 /* eslint-disable react/jsx-filename-extension, react/no-multi-comp */
 /* global describe it beforeEach afterEach */
 
@@ -49,7 +47,7 @@ const dataSource = [
                         label: '裙子',
                         className: 'k-6',
                         key: '6',
-                    }
+                    },
                 ],
             },
         ],
@@ -78,7 +76,6 @@ class ExpandDemo extends Component {
         );
     }
 }
-
 class SelectDemo extends Component {
     state = {
         selectedKeys: ['1'],
@@ -103,7 +100,6 @@ class SelectDemo extends Component {
         );
     }
 }
-
 class CheckDemo extends Component {
     state = {
         checkedKeys: ['4', '5', '6'],
@@ -130,21 +126,20 @@ class CheckDemo extends Component {
         );
     }
 }
-
 class DragDemo extends React.Component {
     static propTypes = {
-        canDrop: propTypes.func
-    }
+        canDrop: propTypes.func,
+    };
 
     static defaultProps = {
-        canDrop: () => true
-    }
+        canDrop: () => true,
+    };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            gData: cloneData(dataSource)
+            gData: cloneData(dataSource),
         };
     }
 
@@ -204,7 +199,6 @@ class DragDemo extends React.Component {
         );
     }
 }
-
 class AsyncDemo extends Component {
     state = {
         data: [
@@ -261,7 +255,6 @@ describe('Tree', () => {
 
     it('should render by children', () => {
         const loop = data =>
-
             data.map(item => {
                 return (
                     <TreeNode
@@ -269,7 +262,6 @@ describe('Tree', () => {
                         {...item}
                         className={`k-${item.key}`}
                     >
-
                         {item.children ? loop(item.children) : null}
                     </TreeNode>
                 );
@@ -370,7 +362,6 @@ describe('Tree', () => {
             </Tree>,
             mountNode
         );
-
         assert(!!document.querySelector('.custom-child-tree'));
     });
 
@@ -649,12 +640,14 @@ describe('Tree', () => {
 
     it('should support setting indeterminate key when checkStrictly true', done => {
         class Demo extends Component {
-            constructor () {
+            constructor() {
                 super();
 
                 setTimeout(() => {
                     ['1', '2', '3'].forEach(key => assertChecked(key, true));
-                    ['4', '5', '6'].forEach(key => assertIndeterminate(key, true));
+                    ['4', '5', '6'].forEach(key =>
+                        assertIndeterminate(key, true)
+                    );
 
                     this.setState({ checkedKeys: [] });
                     ['4', '5', '6'].forEach(key => assertChecked(key, false));
@@ -662,22 +655,22 @@ describe('Tree', () => {
                     this.setState({
                         checkedKeys: {
                             checked: '1',
-                            indeterminate: '2'
-                        }
+                            indeterminate: '2',
+                        },
                     });
                     assertChecked('1', true);
                     assertIndeterminate('2', true);
 
                     done();
-                }, 100)
+                }, 100);
             }
 
             state = {
                 checkedKeys: {
                     checked: ['1', '2', '3'],
-                    indeterminate: ['4', '5', '6']
-                }
-            }
+                    indeterminate: ['4', '5', '6'],
+                },
+            };
 
             render() {
                 return (
@@ -687,7 +680,7 @@ describe('Tree', () => {
                         checkStrictly
                         checkedKeys={this.state.checkedKeys}
                         dataSource={cloneData(dataSource, {
-                            2: { disabled: false }
+                            2: { disabled: false },
                         })}
                     />
                 );
@@ -699,7 +692,7 @@ describe('Tree', () => {
 
     it('should support update indeterminate key when dataSource change', done => {
         class Demo extends Component {
-            constructor () {
+            constructor() {
                 super();
 
                 setTimeout(() => {
@@ -710,7 +703,7 @@ describe('Tree', () => {
 
                     this.state.data[0].children[0].children.length = 1;
                     this.setState({ data: this.state.data });
-                    assertIndeterminate('2', false)
+                    assertIndeterminate('2', false);
 
                     done();
                 }, 100);
@@ -718,9 +711,9 @@ describe('Tree', () => {
 
             state = {
                 data: cloneData(dataSource, {
-                    2: { disabled: false }
-                })
-            }
+                    2: { disabled: false },
+                }),
+            };
 
             render() {
                 return (
@@ -732,9 +725,8 @@ describe('Tree', () => {
                 );
             }
         }
-        ReactDOM.render(<Demo/>, mountNode);
+        ReactDOM.render(<Demo />, mountNode);
     });
-
 
     it('should support editing node', () => {
         let called = false;
@@ -838,18 +830,18 @@ describe('Tree', () => {
     });
 
     it('should stop dragover event propagation whatever could drop or not', () => {
-        let isCanDrop = false
+        let isCanDrop = false;
 
-        function canDrop({node}) {
-            assert(node.props.eventKey === '2')
-            return isCanDrop
+        function canDrop({ node }) {
+            assert(node.props.eventKey === '2');
+            return isCanDrop;
         }
         ReactDOM.render(<DragDemo canDrop={canDrop} />, mountNode);
 
         // 禁止拖拽
         dragTreeNode('6', '2', 1, isCanDrop);
         // 允许拖拽
-        isCanDrop = true
+        isCanDrop = true;
         dragTreeNode('6', '2', 1, isCanDrop);
     });
 
@@ -1029,20 +1021,121 @@ describe('Tree', () => {
                     <TreeNode label="Select" key="2">
                         <TreeNode label="TreeSelect" key="3" />
                     </TreeNode>
-                    <TreeNode label="Input" key="4" />
-                    dasdfa
-                    <div className="illegal-div" />
-                    <Button className="illegal-bt">dasd</Button>
+                    <TreeNode label="Input" key="4">
+                        dasdfa
+                        <div className="illegal-div" />
+                        <Button className="illegal-bt">dasd</Button>
+                    </TreeNode>
                 </TreeNode>
             </Tree>,
             mountNode
         );
-
         const myTree = document.querySelector('.my-tree');
 
-        assert(myTree.textContent.indexOf('dasdfa') !== -1);
+        assert(myTree.textContent.indexOf('dasdfa') === -1);
         assert(myTree.querySelectorAll('.illegal-bt').length === 1);
         assert(myTree.querySelectorAll('.illegal-div').length === 1);
+    });
+
+    // fix: https://github.com/alibaba-fusion/next/issues/1914
+    it('fix bug on isLeaf', () => {
+        [
+            <Tree key={0} defaultExpandAll loadData={() => Promise.resolve([])}>
+                <TreeNode label="Form" key="1">
+                    <TreeNode
+                        label="Input"
+                        key="2"
+                        isLeaf
+                        className="leaf-node"
+                    />
+                    <TreeNode
+                        label="TreeSelect"
+                        key="3"
+                        className="leaf-node"
+                    />
+                </TreeNode>
+            </Tree>,
+            <Tree
+                key={1}
+                defaultExpandAll
+                loadData={() => Promise.resolve([])}
+                dataSource={[
+                    {
+                        label: 'Form',
+                        key: '1',
+                        children: [
+                            {
+                                label: 'Input',
+                                key: '2',
+                                className: 'leaf-node',
+                                isLeaf: true,
+                            },
+                            {
+                                label: 'TreeSelect',
+                                key: '3',
+                                className: 'leaf-node',
+                                isLeaf: true,
+                            },
+                        ],
+                    },
+                ]}
+            />,
+        ].forEach(instance => {
+            ReactDOM.render(instance, mountNode);
+            assert(
+                document.querySelectorAll('.leaf-node .tree-switcher-icon')
+                    .length === 0
+            );
+            ReactDOM.unmountComponentAtNode(mountNode);
+        });
+    });
+
+    it('fix bug on level', () => {
+        [
+            <Tree
+                key="0"
+                dataSource={dataSource}
+                defaultExpandAll
+                isNodeBlock
+                useVirtual
+            />,
+            <Tree key="1" defaultExpandAll isNodeBlock useVirtual>
+                {renderTreeNodeWithData(dataSource)}
+            </Tree>,
+        ].forEach(instance => {
+            ReactDOM.render(instance, mountNode);
+
+            walk(dataSource, (item, level) => {
+                assert(
+                    document
+                        .querySelector(`.${item.className}`)
+                        .getAttribute('level') === String(level)
+                );
+            });
+            ReactDOM.unmountComponentAtNode(mountNode);
+        });
+    });
+
+    it('fix error when dataSource is empty', done => {
+        function App() {
+            const [dataSource, setDataSource] = useState([]);
+
+            setTimeout(() => {
+                setDataSource([]);
+            });
+            return (
+                <Tree
+                    defaultExpandAll
+                    className="my-tree"
+                    dataSource={dataSource}
+                />
+            );
+        }
+        ReactDOM.render(<App />, mountNode);
+
+        setTimeout(() => {
+            done();
+        }, 100);
     });
 
     it('should support rtl', () => {
@@ -1065,7 +1158,7 @@ function createDataSource(level = 2, count = 3) {
     const dataSource = [];
 
     const drill = (children, _level, _count) => {
-        children.forEach((child, i) => {
+        children.forEach(child => {
             child.children = new Array(_count).fill(null).map((__, k) => {
                 const key = `${child.key}-${k}`;
                 return {
@@ -1204,7 +1297,7 @@ function rightClickTreeNode(key) {
     );
 }
 
-function dragTreeNode(dragKey, dropKey, dropPosition, isCanDrop=true) {
+function dragTreeNode(dragKey, dropKey, dropPosition, isCanDrop = true) {
     const dragNodeLabel = findTreeNodeByKey(dragKey).querySelector(
         '.next-tree-node-label'
     );
@@ -1289,4 +1382,27 @@ function assertActiveElement() {
 
 function findInnerNodeByKey(key) {
     return findTreeNodeByKey(key).querySelector('.next-tree-node-inner');
+}
+
+function walk(dataSource, enter, level = 1, parent) {
+    dataSource.forEach((item, index) => {
+        enter(item, level, index, parent);
+        const { children } = item;
+        if (children && children.length) {
+            walk(children, enter, level + 1, parent);
+        }
+    });
+}
+
+function renderTreeNodeWithData(dataSource) {
+    const drill = items => {
+        if (items && items.length) {
+            return items.map(({ key, children, ...others }) => (
+                <TreeNode {...others} key={key}>
+                    {children && drill(children)}
+                </TreeNode>
+            ));
+        }
+    };
+    return drill(dataSource);
 }

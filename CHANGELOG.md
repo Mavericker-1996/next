@@ -1,5 +1,52 @@
 # Change Log 
 
+## [1.20.11](https://github.com/alibaba-fusion/next/compare/1.20.10...1.20.11) (2020-06-10)
+
+
+### Bug Fixes
+
+* **Dialog:** should has max-height when setting height,close [#1912](https://github.com/alibaba-fusion/next/issues/1912) ([902a2d2](https://github.com/alibaba-fusion/next/commit/902a2d2))
+* **Select:** AutoComplete input focus selectionStart close [#1913](https://github.com/alibaba-fusion/next/issues/1913) ([#1921](https://github.com/alibaba-fusion/next/issues/1921)) ([a3f17c3](https://github.com/alibaba-fusion/next/commit/a3f17c3))
+* **Table:** table should scroll inside itself ([9398869](https://github.com/alibaba-fusion/next/commit/9398869))
+* **Tree:** fix bug on isLeaf and level ([#1917](https://github.com/alibaba-fusion/next/issues/1917)) ([f4d89fd](https://github.com/alibaba-fusion/next/commit/f4d89fd))
+* **Typescript:** update ConfigProvider ([9950b51](https://github.com/alibaba-fusion/next/commit/9950b51))
+* **VirtualList:** enhance robotness ([ddcde86](https://github.com/alibaba-fusion/next/commit/ddcde86))
+
+
+
+
+## [1.20.10](https://github.com/alibaba-fusion/next/compare/1.20.9...1.20.10) (2020-06-03)
+
+
+### Bug Fixes
+
+* **Tree:** fix error when dataSource is empty ([a8fbffb](https://github.com/alibaba-fusion/next/commit/a8fbffb))
+
+
+
+
+## [1.20.9](https://github.com/alibaba-fusion/next/compare/1.20.8...1.20.9) (2020-06-03)
+
+
+### Bug Fixes
+
+* **Tree:** support styled component ([be52446](https://github.com/alibaba-fusion/next/commit/be52446))
+
+
+
+
+## [1.20.8](https://github.com/alibaba-fusion/next/compare/1.20.7...1.20.8) (2020-06-02)
+
+
+### Bug Fixes
+
+* **DatePicker:** icon className should be string ([80fc6cb](https://github.com/alibaba-fusion/next/commit/80fc6cb))
+* **Overlay:** dom should ready before onOpen, close [#1901](https://github.com/alibaba-fusion/next/issues/1901) ([6ac02c0](https://github.com/alibaba-fusion/next/commit/6ac02c0))
+* **Util:** adapt to  rollup, close [#1898](https://github.com/alibaba-fusion/next/issues/1898) ([e22e4a4](https://github.com/alibaba-fusion/next/commit/e22e4a4))
+
+
+
+
 ## [1.20.7](https://github.com/alibaba-fusion/next/compare/1.20.6...1.20.7) (2020-05-28)
 
 
