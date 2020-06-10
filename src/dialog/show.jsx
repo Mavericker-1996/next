@@ -203,6 +203,7 @@ const ConfigModal = ConfigProvider.config(Modal, { componentName: 'Dialog' });
  */
 export const show = (config = {}) => {
     const container = document.createElement('div');
+    let currentConfig = { ...config };
     const unmount = () => {
         if (config.afterClose) {
             config.afterClose();
@@ -214,27 +215,38 @@ export const show = (config = {}) => {
     document.body.appendChild(container);
     const newContext = ConfigProvider.getContext();
 
-    let instance, myRef;
+    let instance;
 
-    ReactDOM.render(
-        <ConfigProvider {...newContext}>
-            <ConfigModal
-                {...config}
-                afterClose={unmount}
-                ref={ref => {
-                    myRef = ref;
-                }}
-            />
-        </ConfigProvider>,
-        container,
-        function() {
-            instance = myRef;
-        }
-    );
+    const render = (modalConfig = {}) => {
+        setTimeout(() => {
+            ReactDOM.render(
+                <ConfigProvider {...newContext}>
+                    <ConfigModal
+                        {...modalConfig}
+                        afterClose={unmount}
+                        ref={ref => {
+                            instance = ref;
+                        }}
+                    />
+                </ConfigProvider>,
+                container
+            );
+        });
+    };
+
+    render(currentConfig);
+
     return {
         hide: () => {
             const inc = instance && instance.getInstance();
             inc && inc.close();
+        },
+        update: (newConfig = {}) => {
+            currentConfig = {
+                ...currentConfig,
+                ...newConfig,
+            };
+            render(currentConfig);
         },
     };
 };

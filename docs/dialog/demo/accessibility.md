@@ -1,6 +1,6 @@
 # 无障碍
 
-- order: 7
+- order: 8
 
 通过`okProps`与`cancelProps`设置`aria-label`属性，屏幕阅读器读取确定和取消按钮。关于键盘操作请参考`ARIA and KeyBoard`。
 
